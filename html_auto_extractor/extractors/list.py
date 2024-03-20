@@ -134,7 +134,7 @@ class ListExtractor(BaseExtractor):
                     result.append(sibling_selector)
 
         cluster = sorted(cluster, key=lambda x: x.nth)
-        logger.log('inspect', f'cluster after extend {cluster}')
+        logger.log('INFO', f'cluster after extend {cluster}')
         return cluster
 
     def _best_cluster(self, clusters):
@@ -144,10 +144,10 @@ class ListExtractor(BaseExtractor):
         :return:
         """
         if not clusters:
-            logger.log('inspect', 'there is on cluster, just return empty result')
+            logger.log('INFO', 'there is on cluster, just return empty result')
             return []
         if len(clusters) == 1:
-            logger.log('inspect', 'there is only one cluster, just return first cluster')
+            logger.log('INFO', 'there is only one cluster, just return first cluster')
             return clusters[0]
         # choose best cluster using score
         clusters_score = defaultdict(dict)
@@ -160,7 +160,7 @@ class ListExtractor(BaseExtractor):
             if clusters_score[cluster_id]['clusters_score'] > clusters_score_max:
                 clusters_score_max = clusters_score[cluster_id]['clusters_score']
                 clusters_score_arg_max = cluster_id
-        logger.log('inspect', f'clusters_score {clusters_score}')
+        logger.log('INFO', f'clusters_score {clusters_score}')
         best_cluster = clusters[clusters_score_arg_max]
         return best_cluster
 
@@ -190,7 +190,7 @@ class ListExtractor(BaseExtractor):
         if not probabilities_of_title_avg:
             return None
         best_path = max(probabilities_of_title_avg.items(), key=operator.itemgetter(1))[0]
-        logger.log('inspect', f'best tag path {best_path}')
+        logger.log('INFO', f'best tag path {best_path}')
 
         # extract according to best tag path
         result = []
@@ -226,14 +226,14 @@ class ListExtractor(BaseExtractor):
 
         # build clusters
         clusters = self._build_clusters(element)
-        logger.log('inspect', f'after build clusters {clusters}')
+        logger.log('INFO', f'after build clusters {clusters}')
 
         # choose best cluster
         best_cluster = self._best_cluster(clusters)
-        logger.log('inspect', f'best cluster {best_cluster}')
+        logger.log('INFO', f'best cluster {best_cluster}')
 
         extended_cluster = self._extend_cluster(best_cluster)
-        logger.log('inspect', f'extended cluster {extended_cluster}')
+        logger.log('INFO', f'extended cluster {extended_cluster}')
 
         # extract result from best cluster
         return self._extract_cluster(best_cluster)
