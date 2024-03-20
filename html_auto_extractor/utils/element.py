@@ -508,7 +508,7 @@ def similarity_with_element(element1: Element, element2: Element):
     """
     alias1 = element1.alias
     alias2 = element2.alias
-    # TODO: use better metrics to compare the two elements
+    # : use better metrics to compare the two elements
     return similarity(alias1, alias2)
 
 
@@ -520,7 +520,7 @@ def similarity_with_siblings(element: Element):
     """
     scores = []
     for sibling in siblings(element):
-        # TODO: maybe compare all children not only alias
+        # : maybe compare all children not only alias
         scores.append(similarity_with_element(element, sibling))
     if not scores:
         return 0
